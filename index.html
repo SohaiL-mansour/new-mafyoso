@@ -24,7 +24,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: radial-gradient(circle at center, #1a0a0a 0%, #0f0f23 100%);
+            background: 
+                linear-gradient(rgba(15, 15, 35, 0.8), rgba(26, 10, 10, 0.9)),
+                url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             position: relative;
         }
 
@@ -606,9 +611,9 @@
  </head>
  <body><!-- Intro Screen -->
   <div id="introScreen" class="intro-screen">
-   <h1 class="blood-title" id="gameTitle">Mafyoso 
+   <h1 class="blood-title" id="gameTitle">🕵️ Mafyoso 🔫 
     <div class="blood-drip"></div></h1>
-   <p class="made-by">made by sohail</p><button class="start-btn" onclick="showCrimeSelection()">ابدأ اللعب</button> <!-- Completed Crimes Section -->
+   <p class="made-by">🎮 made by sohail</p><button class="start-btn" onclick="showCrimeSelection()">🎯 ابدأ اللعب</button> <!-- Completed Crimes Section -->
    <div id="completedCrimesSection" class="completed-crimes-section hidden">
     <h3 class="completed-title">🏆 الجرائم المكتملة</h3>
     <div id="completedCrimesList" class="completed-crimes-list"><!-- Completed crimes will be added here -->
@@ -657,9 +662,9 @@
    </div>
    <div class="voting-section">
     <div class="voting-title">
-     صوت لطرد المشتبه به
+     🗳️ صوت لطرد المشتبه به
     </div>
-    <p style="text-align: center; color: #FFD700; margin-bottom: 20px;">ناقش مع اللاعبين الآخرين ثم صوت على من تشك أنه المافيوسو</p>
+    <p style="text-align: center; color: #FFD700; margin-bottom: 20px;">💬 ناقش مع اللاعبين الآخرين ثم صوت على من تشك أنه المافيوسو</p>
     <div class="vote-buttons" id="voteButtons"><!-- Vote buttons will be generated here -->
     </div>
    </div>
@@ -1666,10 +1671,33 @@
                 crimeCard.className = 'crime-card';
                 crimeCard.onclick = () => selectCrime(index);
                 
+                // Job icons mapping
+                const jobIcons = {
+                    'سائق': '🚗', 'استقبال': '🏨', 'أمن': '🛡️', 'نظافة': '🧹', 'طباخ': '👨‍🍳',
+                    'منظمة إنتاج': '🎬', 'مساعد طهي': '🍳', 'متذوقة': '👩‍🍳', 'أرشفة': '📁',
+                    'محللة بيانات': '📊', 'مندوب خارجي': '🚶‍♂️', 'مسؤولة خزنة': '🔐',
+                    'ابنة العائلة': '👩', 'خادم قديم': '👨‍💼', 'محامية': '⚖️', 'فني صيانة': '🔧',
+                    'مهندس': '👨‍💻', 'محاسبة': '💰', 'عامل': '👷‍♂️', 'سكرتيرة': '📝',
+                    'حارس': '👮‍♂️', 'مرشدة': '👩‍🏫', 'فنان': '🎨', 'ناقدة فنية': '🖼️',
+                    'مساعد باحث': '🔬', 'مصورة': '📸', 'عامل حفر': '⛏️', 'طالبة دراسات عليا': '👩‍🎓',
+                    'مساعد طباخ': '👨‍🍳', 'نادلة': '👩‍🍳', 'مدير المطعم': '👨‍💼', 'ناقدة طعام': '🍽️',
+                    'صراف': '💳', 'مديرة فرع': '👩‍💼', 'حارس أمن': '🛡️', 'محرر': '✏️',
+                    'مساعدة شخصية': '📋', 'ناشر': '📚', 'كاتبة منافسة': '✍️', 'صائغ': '💎',
+                    'بائعة': '👩‍💼', 'زبونة مميزة': '👩‍💼', 'مدرسة زميلة': '👩‍🏫', 'طالب': '👨‍🎓',
+                    'عامل نظافة': '🧹', 'مديرة المدرسة': '👩‍💼', 'مرشد سياحي': '🗺️', 'أمينة متحف': '🏛️',
+                    'باحثة تاريخ': '📜', 'ممرضة': '👩‍⚕️', 'مريض': '🤒', 'صيدلانية': '💊',
+                    'طبيب منافس': '👨‍⚕️', 'مقاول': '👷‍♂️', 'مهندسة مساعدة': '👩‍💻', 'عامل بناء': '👷‍♂️',
+                    'مفتشة سلامة': '🦺', 'مبرمج': '💻', 'مديرة مشاريع': '📊', 'فني شبكات': '🌐',
+                    'محللة أنظمة': '💻', 'سياسي': '🏛️', 'صحفية زميلة': '📰', 'رجل أعمال': '💼'
+                };
+
                 crimeCard.innerHTML = `
                     <div class="crime-title">${crime.title}</div>
                     <div class="crime-suspects">
-                        ${crime.suspects.map(suspect => `• ${suspect.name} (${suspect.job})`).join('<br>')}
+                        ${crime.suspects.map(suspect => {
+                            const icon = jobIcons[suspect.job] || '👤';
+                            return `${icon} ${suspect.name} (${suspect.job})`;
+                        }).join('<br>')}
                     </div>
                 `;
                 
@@ -1781,7 +1809,20 @@
                 if (!gameState.eliminatedPlayers.includes(index)) {
                     const button = document.createElement('button');
                     button.className = 'vote-btn';
-                    button.textContent = `${suspect.name} (${suspect.job})`;
+                    
+                    // Job icons mapping (simplified for vote buttons)
+                    const jobIcons = {
+                        'سائق': '🚗', 'استقبال': '🏨', 'أمن': '🛡️', 'نظافة': '🧹', 'طباخ': '👨‍🍳',
+                        'منظمة إنتاج': '🎬', 'مساعد طهي': '🍳', 'متذوقة': '👩‍🍳', 'أرشفة': '📁',
+                        'محللة بيانات': '📊', 'مندوب خارجي': '🚶‍♂️', 'مسؤولة خزنة': '🔐',
+                        'ابنة العائلة': '👩', 'خادم قديم': '👨‍💼', 'محامية': '⚖️', 'فني صيانة': '🔧',
+                        'مهندس': '👨‍💻', 'محاسبة': '💰', 'عامل': '👷‍♂️', 'سكرتيرة': '📝',
+                        'حارس': '👮‍♂️', 'مرشدة': '👩‍🏫', 'فنان': '🎨', 'ناقدة فنية': '🖼️',
+                        'مساعد باحث': '🔬', 'مصورة': '📸', 'عامل حفر': '⛏️', 'طالبة دراسات عليا': '👩‍🎓'
+                    };
+                    
+                    const icon = jobIcons[suspect.job] || '👤';
+                    button.innerHTML = `${icon} ${suspect.name}<br><small style="opacity: 0.8;">(${suspect.job})</small>`;
                     button.onclick = () => votePlayer(index);
                     voteButtons.appendChild(button);
                 }
@@ -2076,5 +2117,5 @@
             loadCompletedCrimes();
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'997ba24a23741858',t:'MTc2MjAwMjY0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'997c117fb543e18d',t:'MTc2MjAwNzE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
